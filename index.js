@@ -31,6 +31,7 @@ io.on('connection', function(socket){
         if (msg == 1) {
             console.log('OMG Rainbows!'.green);
             io.emit('code', "Start application");
+            process.exit(1);
         }
         else {
             console.log('Unknow code'.inverse);
