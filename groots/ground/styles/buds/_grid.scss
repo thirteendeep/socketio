@@ -1,0 +1,235 @@
+// ==========================================================================
+// Grid Custom System
+// ==========================================================================
+
+// !! Requires map-variables $grid-breakpoints
+
+// Sass to Js
+// --------------------------------------------------------------------------
+
+@import '../../../../node_modules/sass-to-js/sass/sass-to-js';
+
+[gr-handler]::before {
+    content: sassToJs($grid-breakpoints); // stylelint-disable-line
+    display: none;
+}
+
+// Grid Utilities
+// --------------------------------------------------------------------------
+
+%container {
+    width: 100%;
+    margin: 0 auto;
+    max-width: $grid-container-width;
+
+    @if ($grid-gutter-width != 0) {
+        padding-left: ($grid-gutter-width / 2);
+        padding-right: ($grid-gutter-width / 2);
+    }
+}
+
+%container-full {
+    @extend %container;
+    max-width: 100%;
+}
+
+%row {
+    display: flex;
+    flex-flow: row wrap;
+
+    @if ($grid-gutter-width != 0) {
+        margin-left: -$grid-gutter-width/2;
+        margin-right: -$grid-gutter-width/2;
+    }
+}
+
+%col {
+    display: block;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+
+    @if ($grid-gutter-width != 0) {
+        padding-left: $grid-gutter-width/2;
+        padding-right: $grid-gutter-width/2;
+    }
+}
+
+@mixin col($bp, $col) {
+    @extend %col;
+
+    @include mq($bp) {
+        flex-basis: 0;
+        flex-grow: col-math($col);
+    }
+}
+
+%row-block {
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+
+    @if ($grid-gutter-width != 0) {
+        margin-left: -$grid-gutter-width/2;
+        margin-right: -$grid-gutter-width/2;
+    }
+}
+
+%block {
+    flex: 1 1 auto;
+    flex-basis: 100%;
+    max-width: 100%;
+
+    @if ($grid-gutter-width != 0) {
+        padding-left: $grid-gutter-width/2;
+        padding-right: $grid-gutter-width/2;
+        margin-top: $grid-gutter-width;
+    }
+}
+
+@mixin collapse($collapse: true) {
+    @if ($collapse) {
+        padding-left: 0;
+        padding-right: 0;
+        margin-top: 0 !important;
+    } @else {
+        padding-left: $grid-gutter-width/2;
+        padding-right: $grid-gutter-width/2;
+    }
+}
+
+@function col-math($col) {
+    $column: 0;
+
+    @if type-of($col) == 'number' {
+        $column: $col;
+    } @else if type-of($col) == 'list' {
+        $column: nth($col, 1) / nth($col, 3);
+    } @else {
+        $column: $col;
+    }
+    @return $column;
+}
+
+// Grid Mixin
+// --------------------------------------------------------------------------
+
+@mixin grid($attribute: 'gr-grid', $attribute-columns: 12, $gutter: 0, $max-width: 100%) {
+
+    // Container
+    [#{$attribute}^='container'] {
+        @extend %container;
+
+        // Container fluid
+        &[#{$attribute}$='--fluid'] {
+            @extend %container-full;
+        }
+    }
+
+    // Row
+    [#{$attribute}~=row] {
+        @extend %row;
+    }
+
+    // Row Block-Grid
+    [#{$attribute}~=row--block] {
+        @extend %row-block;
+    }
+
+    // Collapse without breakpoint
+    [#{$attribute}~=collapse] {
+        > [#{$attribute}] {
+            @include collapse;
+        }
+    }
+
+    // Columns
+    [#{$attribute}~=row] {
+        > [#{$attribute}*='-'],
+        [#{$attribute}~=column] {
+            @extend %col;
+        }
+    }
+
+    // Block column
+    [#{$attribute}=block] {
+        @extend %block;
+    }
+
+    @each $bp, $w in $grid-breakpoints {
+        @media only screen and (min-width: #{$w}) {
+            @for $i from 1 through $attribute-columns {
+
+                [#{$attribute}~=row] [#{$attribute}~='#{$bp}-#{$i}'] {
+                    flex-grow: $i;
+                    flex-basis: 0;
+                }
+
+                [#{$attribute}~=row--block] {
+                    &[#{$attribute}~='#{$bp}-#{$i}'] {
+                        [#{$attribute}=block] {
+                            flex-basis: 100% / $i;
+                            max-width: 100% / $i;
+
+                            &:nth-child(n) {
+                                margin-top: 0;
+                            }
+
+                            &:nth-child(n + #{$i + 1}) {
+                                margin-top: $grid-gutter-width;
+                            }
+                        }
+                    }
+
+                    &[#{$attribute}~='#{$bp}-offset-#{$i}'] {
+                        margin-left: calc((100% / #{$grid-columns} * #{$i}) - (#{$grid-gutter-width} / 2));
+                        margin-right: calc((100% / #{$grid-columns} * #{$i}) - (#{$grid-gutter-width} / 2));
+                    }
+
+                    &[#{$attribute}~='#{$bp}-offset-left-#{$i}'] {
+                        margin-left: calc((100% / #{$grid-columns} * #{$i}) - (#{$grid-gutter-width} / 2));
+                    }
+
+                    &[#{$attribute}~='#{$bp}-offset-right-#{$i}'] {
+                        margin-right: calc((100% / #{$grid-columns} * #{$i}) - (#{$grid-gutter-width} / 2));
+                    }
+                }
+
+                //todo remove offset
+                [#{$attribute}~=row] {
+                    [#{$attribute}~='#{$bp}-offset-#{$i}'] {
+                        margin-left: 100% / $grid-columns * $i;
+                        margin-right: 100% / $grid-columns * $i;
+                    }
+
+                    [#{$attribute}~='#{$bp}-offset-left-#{$i}'] {
+                        margin-left: 100% / $grid-columns * $i;
+                    }
+
+                    [#{$attribute}~='#{$bp}-offset-right-#{$i}'] {
+                        margin-right: 100% / $grid-columns * $i;
+                    }
+                }
+            }
+        }
+    }
+
+    @each $bp, $w in $grid-breakpoints {
+        @media only screen and (min-width: #{$w}) {
+            [#{$attribute}=row] {
+
+                &[#{$attribute}~='#{$bp}-collapse'] {
+                    > [#{$attribute}] {
+                        @include collapse;
+                    }
+                }
+
+                &[#{$attribute}~='#{$bp}-uncollapse'] {
+                    > [#{$attribute}] {
+                        @include collapse(false);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,564 @@
+// ==========================================================================
+// Form
+// ==========================================================================
+
+$form-element-background-color: if(variable-exists(form-element-background-color), $form-element-background-color, transparent);
+$form-element-height: if(variable-exists(form-element-height), $form-element-height, 2.75rem);
+$form-element-radius: if(variable-exists(form-element-radius), $form-element-radius, 0);
+$form-element-border-style: if(variable-exists(form-element-border-style), $form-element-border-style, solid);
+$form-element-border-color: if(variable-exists(form-element-border-color), $form-element-border-color, #ccc);
+$form-element-border-width: if(variable-exists(form-element-border-width), $form-element-border-width, 1px);
+$form-element-focus-color: if(variable-exists(form-element-focus-color), $form-element-focus-color, color(brand, primary));
+$form-element-padding: if(variable-exists(form-element-padding), $form-element-padding, 1em);
+
+%input {
+    @include placeholder {
+        color: color(greys, light);
+        opacity: 1;
+        transition: opacity .3s;
+    }
+
+    height: $form-element-height;
+    line-height: $form-element-height;
+    background-color: $form-element-background-color;
+    flex: 1 0 auto;
+    order: 0;
+    padding: 0 $form-element-padding;
+
+    .form-item--icon-before & {
+        padding: 0 $form-element-padding 0 0;
+    }
+
+    .form-item--icon-after & {
+        padding: 0 0 0 $form-element-padding;
+    }
+
+    @if $form-element-border-width {
+        border-width: $form-element-border-width;
+        border-style: $form-element-border-style;
+        border-color: $form-element-border-color;
+    }
+
+    @if $form-element-radius {
+        border-radius: $form-element-radius;
+
+        .form-item--icon-before & {
+            border-radius: 0 $form-element-radius $form-element-radius 0;
+        }
+
+        .form-item--icon-after & {
+            border-radius: $form-element-radius 0 0 $form-element-radius;
+        }
+    }
+
+    .form-item--inline & {
+        flex: 1 1 auto;
+    }
+
+    &:focus {
+        @include placeholder {
+            opacity: .5;
+        }
+
+        border-color: $form-element-focus-color;
+
+        & ~ .icon {
+            border-color: $form-element-focus-color;
+            color: $form-element-focus-color;
+        }
+    }
+}
+
+
+@mixin form($class: '.form') {
+
+    #{$class} {
+        .form-item,
+        .form-item--icon-before,
+        .form-item--icon-after,
+        .form-item--inline {
+            @extend %clearfix;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            position: relative;
+            margin-bottom: $root-vgrid;
+
+            label {
+                flex: 1 0 auto;
+            }
+
+            input:not([type='submit']),
+            textarea {
+                @extend %input;
+            }
+
+            textarea {
+                height: $form-element-height * 5;
+            }
+        }
+
+        .form-item--icon-before,
+        .form-item--icon-after,
+        .form-item--inline {
+            overflow: hidden;
+            flex-direction: row;
+        }
+
+        .form-item--icon-before,
+        .form-item--icon-after {
+            label {
+                flex: 1 0 100%;
+                order: -2;
+            }
+
+            .icon {
+                flex: 0 0 $form-element-height;
+                text-align: center;
+                line-height: calc(#{$form-element-height} - 2px);
+                background-color: $form-element-background-color;
+                @if $form-element-border-width {
+                    border-width: $form-element-border-width;
+                    border-style: $form-element-border-style;
+                    border-color: $form-element-border-color;
+                }
+                @if $form-element-radius {
+                    border-radius: $form-element-radius 0 0 $form-element-radius;
+                }
+            }
+        }
+
+        .form-item--icon-before {
+            .icon {
+                order: -1;
+                @if $form-element-radius {
+                    border-right: 0;
+                }
+                @if $form-element-radius {
+                    border-radius: $form-element-radius 0 0 $form-element-radius;
+                }
+            }
+        }
+
+        .form-item--icon-after {
+            .icon {
+                order: 1;
+                @if $form-element-radius {
+                    border-left: 0;
+                }
+                @if $form-element-radius {
+                    border-radius: 0 $form-element-radius $form-element-radius 0;
+                }
+            }
+        }
+
+        .form-item--inline {
+            label {
+                flex: 0 1 auto;
+                line-height: $form-element-height;
+                margin-right: $grid-gutter-width;
+            }
+        }
+    }
+}
+
+@mixin form-validation() {
+
+    // Parsley
+    // --------------------------------------------------
+
+    .parsley-error :not(label),
+    .parsley-error .file-upload-wrapper label {
+        color: $color-error !important;
+        border-color: $color-error !important;
+    }
+
+    .parsley-error label::before,
+    .parsley-error label::after {
+        border-color: $color-error !important;
+    }
+
+    .parsley-errors-list {
+        list-style: none;
+        margin-top: .5em;
+        flex: 1 1 100%;
+        order: 2;
+
+        .form-item & {
+            float: left;
+        }
+
+        .form-item--inline & {
+            //display: inline-block;
+            float: right;
+        }
+    }
+}
+
+
+// Custom Select
+// --------------------------------------------------------------------------
+// @example html - Markup
+// <div class='form-item | form-item--inline'>
+//      <select>
+//           <option disabled checked value='hide'> ... </option>
+//           <option value=' ... '> ... </option>
+//           <option value=' ... '> ... </option>
+//           <option value=' ... '> ... </option>
+//      </select>
+// </div>
+
+@mixin form-select(
+    $select-size: $form-element-height
+) {
+    .select-wrapper {
+        position: relative;
+        height: $select-size;
+        cursor: pointer;
+        display: inherit;
+
+        select:focus ~ .select-styled,
+        select:focus ~ .select-options {
+            border-color: $form-element-focus-color;
+        }
+
+        .select-hidden {
+            opacity: 0;
+            height: $select-size;
+        }
+
+        .select-styled {
+            @extend %input;
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transition: border-radius $transition-fast ease-in-out;
+            color: color(greys, light);
+
+            &.is-selected {
+                color: inherit;
+            }
+
+
+            &::after {
+                font-family: $gr-icon-font;
+                content: $gr-icon-angle-down;
+                font-size: 1.5em;
+                color: $root-color;
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: $select-size;
+                line-height: $select-size;
+                text-align: center;
+                transition: transform $transition-fast ease-in-out;
+            }
+
+            &:focus,
+            &:active,
+            &.is-active {
+                border-radius: $form-element-radius $form-element-radius 0 0;
+
+                &::after {
+                    transform: rotate(-180deg);
+                }
+            }
+        }
+
+        .select-options {
+            height: 0;
+            max-height: 0;
+            overflow: hidden;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            z-index: map-get($z-indexes, overlay) - 1;
+            text-align: left;
+            background-color: $form-element-background-color;
+            border-radius: 0 0 $form-element-radius $form-element-radius;
+            transition: max-height $transition-fast ease-in-out, padding $transition-fast ease-in-out;
+
+            li {
+                padding-left: $root-padding;
+                padding-right: $root-padding;
+                list-style-type: none;
+
+                &:last-child {
+                    border-radius: 0 0 $form-element-radius $form-element-radius;
+                }
+
+                &[rel='hide'] {
+                    display: none;
+                }
+
+                &[disabled] {
+                    font-style: italic;
+                    opacity: .75;
+                }
+            }
+
+            &.is-active {
+                border-width: $form-element-border-width;
+                border-style: $form-element-border-style;
+                border-color: $form-element-focus-color;
+                margin-top: -1px;
+                padding-top: $root-padding;
+                padding-bottom: $root-padding;
+                height: auto;
+                max-height: 500%;
+                overflow-y: auto;
+            }
+        }
+
+        &.is-inverted {
+            .select-styled {
+                &:focus,
+                &:active,
+                &.is-active {
+                    border-radius: 0 0 $form-element-radius $form-element-radius;
+                }
+            }
+
+            .select-options {
+                top: auto;
+                bottom: 100%;
+                margin-bottom: 0;
+                border-radius: $form-element-radius $form-element-radius 0 0;
+
+                &.is-active {
+                    margin-top: 0;
+                    margin-bottom: -1px;
+                }
+            }
+        }
+    }
+}
+
+// Custom Radio
+// --------------------------------------------------
+// @example html - Markup
+//  <div class='form-item | form-item--inline'>
+//      <input type='radio' name='' id=''>
+//      <label for=''> ... </label>
+//      <input type='radio' name='' id=''>
+//      <label for=''> ... </label>
+// </div>
+
+@mixin form-radio($radio-size: $form-element-height/2, $radio-color: $color-secondary) {
+
+    .radio-wrapper {
+
+        display: inherit;
+
+        .form-item--inline & {
+            float: left;
+        }
+
+        .form-item & + .radio-wrapper {
+            margin-top: 1em;
+        }
+
+        .radio-hidden {
+            display: none;
+
+            & + label {
+                position: relative;
+                display: inline-block;
+                padding-left: $radio-size * 1.25;
+                line-height: $radio-size;
+                min-height: $radio-size;
+                cursor: pointer;
+                color: $root-color;
+
+                &::before,
+                &::after {
+                    display: block;
+                    content: '';
+                    position: absolute;
+                }
+
+                &::before {
+                    top: 0;
+                    left: 0;
+                    height: $radio-size;
+                    width: $radio-size;
+                    background-color: $form-element-background-color;
+                    border: 1px solid $form-element-border-color;
+                    transition: border-color $transition-fast ease-in-out;
+                    border-radius: 50%;
+                }
+
+                &::after {
+                    opacity: 0;
+                    top: $radio-size * .25;
+                    left: $radio-size * .25;
+                    height: $radio-size * .5;
+                    width: $radio-size * .5;
+                    color: $radio-color;
+                    border-radius: 100%;
+                    background-color: $radio-color;
+                    transition: all $transition-fast ease-in-out;
+                    transform: scale(0);
+                }
+
+                &:hover::before {
+                    border-color: $radio-color;
+                }
+            }
+
+            &:checked + label {
+                &::after {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+}
+
+
+// Custom Checkbox
+// --------------------------------------------------
+// @example html - Markup
+// <div class='form-item | form-item--inline'>
+//      <input type='checkbox' name='' id=''>
+//      <label for=''> ... </label>
+// </div>
+
+@mixin form-checkbox($checkbox-size: $form-element-height/2, $checkbox-color: $color-secondary) {
+
+    .checkbox-wrapper {
+
+        @include clearfix;
+        display: inherit;
+
+        .form-item--inline & {
+            float: left;
+        }
+
+        .form-item & + .checkbox-wrapper {
+            margin-top: 1em;
+        }
+
+        .checkbox-hidden {
+            display: none;
+
+            & + label {
+                position: relative;
+                display: inline-block;
+                padding-left: $checkbox-size * 1.25;
+                line-height: $checkbox-size;
+                min-height: $checkbox-size;
+                cursor: pointer;
+                color: $root-color;
+
+                &::before,
+                &::after {
+                    width: $checkbox-size;
+                    height: $checkbox-size;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                }
+
+                &::before {
+                    display: inline-block;
+                    content: '';
+                    background-color: $form-element-background-color;
+                    border: 1px solid $form-element-border-color;
+                    transition: border-color $transition-fast ease-in-out;
+                }
+
+                &::after {
+                    font-family: $gr-icon-font;
+                    content: $gr-icon-check;
+                    display: block;
+                    font-size: $checkbox-size / 1.8;
+                    text-align: center;
+                    opacity: 0;
+                    line-height: $checkbox-size;
+                    color: $checkbox-color;
+                    transition: all $transition-fast ease-in-out;
+                    transform: scale(0);
+                }
+
+                &:hover::before {
+                    border-color: $checkbox-color;
+                }
+            }
+
+            &:checked + label {
+                &::after {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+}
+
+
+// Custom Input[type=file]
+// --------------------------------------------------
+// @example html - Markup
+// <div class='form-item | form-item--inline'>
+//      <input type='file' name='' id=''>
+//      <label for=''> ... </label>
+// </div>
+
+@mixin form-input-file() {
+
+    .file-upload-wrapper {
+        cursor: pointer;
+        display: inherit;
+
+        .input-file-hidden {
+            display: none;
+        }
+
+        label {
+            @extend %input;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: color(greys, light);
+
+            &::after {
+                font-family: $gr-icon-font;
+                content: $gr-icon-upload-folder;
+                color: $root-color;
+                position: absolute;
+                width: $form-element-height;
+                text-align: center;
+                top: 0;
+                right: 0;
+                line-height: $form-element-height;
+                transition: transform $transition-fast ease-in-out;
+                @if $form-element-border-width {
+                    border-left: $form-element-border-width $form-element-border-style $form-element-border-color;
+                }
+            }
+
+            &.is-ready {
+                color: inherit;
+
+                &::after {
+                    content: $gr-icon-upload-ready;
+                }
+            }
+        }
+
+        input:active ~ label {
+            border-color: $form-element-focus-color;
+
+            &::after {
+                border-color: $form-element-focus-color;
+                color: $form-element-focus-color;
+            }
+        }
+    }
+}
+
+

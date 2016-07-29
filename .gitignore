@@ -1,1 +1,54 @@
+# Build
+# ------------------------------------------
+/composer.phar
 /node_modules
+npm-debug.log
+/.sass-cache
+/.editorconfig
+/.sass-lint.yml
+gulpfile.js
+package.json
+
+# Groots
+# ------------------------------------------
+/groots/favicon/favicon.json
+/groots/gui/assets/gui.min.js
+/groots/gui/assets/gui.min.css
+/public/.htaccess
+
+# OS/IDE Generated
+# ------------------------------------------
+# MacOSX
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Netbeans
+/nbproject
+
+# Jetbrains
+/.idea
+
+# Craft
+# ------------------------------------------
+# /craft/config/db.php
+# /craft/config/general.php
+# /craft/storage/*
+# !craft/storage/.gitkeep
+/public/dist
+/public/groots
+
+# Wordpress
+# ------------------------------------------
+# /wordpress/wp-config.php
+# /wordpress/wp-content/uploads
+# /wordpress/groots
+
+# Magento
+# ------------------------------------------
+# app/etc/local.xml
+# downloader/
+# var/
+# var/session
+# media/

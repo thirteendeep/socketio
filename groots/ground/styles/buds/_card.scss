@@ -1,0 +1,83 @@
+// ==========================================================================
+// Cards
+// ==========================================================================
+
+// <div class="$card-class">
+//     <figure class="$card-class__figure"><img src="" alt=""></figure>
+//     <div class="$card-class__header"> ... </div>
+//     ...
+//     <div class="$card-class__footer"> ... </div>
+// </div>
+
+@mixin card(
+    $card-class: '.card',
+    $card-border: false,
+    $card-radius: false,
+    $card-padding: $root-padding,
+    $card-figure-ratio: '16/9'
+) {
+
+    #{$card-class} {
+
+        font-size: 1em;
+
+        display: inline-block;
+        width: 100%;
+
+        padding: $card-padding;
+
+        @if $card-border {
+            border: $card-border;
+        }
+        @if $card-radius {
+            border-radius: $card-radius;
+            -webkit-mask-image: -webkit-radial-gradient(circle, $white, $black);
+        }
+    }
+
+    #{$card-class}__header {
+        margin: ($card-padding * -1) ($card-padding * -1) $card-padding;
+        padding: ($card-padding / 2) $card-padding;
+
+        @if $card-border {
+            border-bottom: $card-border;
+        }
+        @if $card-radius {
+            border-radius: $card-radius $card-radius 0 0;
+            -webkit-mask-image: -webkit-radial-gradient(circle, $white, $black);
+        }
+    }
+
+    #{$card-class}__footer {
+        margin: $card-padding ($card-padding * -1) ($card-padding * -1);
+        padding: ($card-padding / 2) $card-padding;
+
+        @if $card-border {
+            border-top: $card-border;
+        }
+        @if $card-radius {
+            border-radius: 0 0 $card-radius $card-radius;
+            -webkit-mask-image: -webkit-radial-gradient(circle, $white, $black);
+        }
+    }
+
+    #{$card-class}__figure {
+        margin: ($card-padding * -1) ($card-padding * -1) $card-padding;
+        position: relative;
+        overflow: hidden;
+        width: auto;
+        @if $card-figure-ratio {
+            @include keep-ratio($card-figure-ratio);
+        }
+        @if $card-radius {
+            border-radius: $card-radius $card-radius 0 0;
+            -webkit-mask-image: -webkit-radial-gradient(circle, $white, $black);
+
+            img {
+                border-radius: $card-radius $card-radius 0 0;
+                -webkit-mask-image: -webkit-radial-gradient(circle, $white, $black);
+            }
+        }
+    }
+
+}

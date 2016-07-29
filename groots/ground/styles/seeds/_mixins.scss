@@ -1,0 +1,102 @@
+// ==========================================================================
+// Mixins
+// ==========================================================================
+
+// Media-Queries
+// --------------------------------------------------------------------------
+@mixin mq($breakpoint) {
+    @if map-has-key($grid-breakpoints, $breakpoint) {
+        @media (min-width: #{map-get($grid-breakpoints, $breakpoint)}) {  // stylelint-disable-line
+            @content;
+        }
+    }
+    @else {
+        @warn 'Unfortunately, no value could be retrieved from `#{$breakpoint}`. '
+            + 'Please make sure it is defined in `$grid-breakpoints` map.';
+    }
+}
+
+// Clearfix
+// --------------------------------------------------------------------------
+@mixin clearfix {
+    &::after {
+        clear: both;
+        content: '';
+        display: table;
+    }
+}
+
+// Font-face
+// --------------------------------------------------------------------------
+//  @example scss - Usage
+//      @include font-face(fontName, #{$font__path}, bold);
+//      @include font-face(fontName, #{$font__path}, normal, italic);
+
+@mixin font-face ($font-family, $filename, $weight: normal, $style: normal) {
+    @font-face {
+        font-family: $font-family;
+        src: url($filename + '.woff');
+        font-weight: $weight;
+        font-style: $style;
+    }
+}
+
+// Keep ratio
+// --------------------------------------------------------------------------
+// @example scss - Usage
+//     figure {
+//         @include keepRatio('16/9');
+//
+//         img,
+//         iframe {
+//             ...
+//         }
+//     }
+
+@mixin keep-ratio($ratio: '1/1') {
+    @extend %img-cover;
+
+    $ratio1: str-slice($ratio, 1, (str-index($ratio, '/') - 1));
+    $ratio2: str-slice($ratio, (str-index($ratio, '/') + 1));
+
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+        content: '';
+        display: block;
+        width: 100%;
+        padding-top: calc(#{$ratio2} * 100 / #{$ratio1} * 1%);
+    }
+
+    & > img,
+    & > figure,
+    & > picture,
+    & > iframe,
+    & > video,
+    & > objectfit {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+// Placeholder prefixer
+// --------------------------------------------------------------------------
+// @example scss - Usage
+//     input {
+//         @include placeholder { color: red; }
+//     }
+
+@mixin placeholder {
+    $placeholders: ':-webkit-input' ':-moz' '-moz' '-ms-input';
+
+    @each $placeholder in $placeholders {
+        &:#{$placeholder}-placeholder { @content; }
+    }
+}

@@ -1,0 +1,138 @@
+// ==========================================================================
+// Variables
+// ==========================================================================
+
+
+// Layout: Grid breakpoints & parameters
+// --------------------------------------------------------------------------
+
+$grid-breakpoints: (
+    //root: 0,
+    xs:                            '30em', // 30em
+    sm:                            '48em', // 48em
+    md:                            '64em', // 64em
+    lg:                            '80em'  // 80em
+);
+
+$grid-columns:                     12;
+$grid-gutter-width:                30px;
+$grid-container-width:             1280px;
+
+
+// Fonts
+// --------------------------------------------------------------------------
+
+$font-path:                        '../fonts/' !default;
+
+$font-primary:                     'Open Sans' !default;
+$font-secondary:                   'Roboto' !default;
+
+
+// Colors (variables & $colors map)
+// --------------------------------------------------------------------------
+
+$color-globalia:                   #1b9cd7;
+
+$colors: (
+    root: (
+        black:                     #000,
+        white:                     #fff,
+    ),
+    brand: (
+        primary:                   $color-globalia,
+        secondary:                 #065ca7
+    ),
+    greys: (
+        xdark:                     #191919,
+        dark:                      #4c4c4c,
+        base:                      #7f7f7f,
+        light:                     #b2b2b2,
+        xlight:                    #e5e5e5
+    ),
+    validation: (
+        error:                     #f00,
+        warning:                   #feef6d,
+        success:                   #40b01a,
+    )
+);
+
+
+// Globals
+// --------------------------------------------------------------------------
+
+$root-color:                       map-get(map-get($colors, greys), xdark) !default;
+$root-cursor:                      default !default;
+
+$root-font-family:                 $font-primary !default;
+$root-font-size:                   16px !default;
+$root-line-height:                 1.5 !default;
+
+$root-text-rendering:              optimizeLegibility !default;
+
+$root-margin:                      1em !default;
+$root-padding:                     1em !default;
+
+$root-border:                      1px solid currentColor !default;
+$root-radius:                      0 !default;
+
+
+//  Navigation
+// --------------------------------------------------------------------------
+
+$nav-height:                       4rem !default;
+$nav-mobile-panel-width:           20rem !default;
+
+
+//  Headings
+// --------------------------------------------------------------------------
+
+$heading-max:                      3em !default; // h1 font-size as reference to calculate the modular-scale and typographic headings font-size
+
+
+//  Form
+// --------------------------------------------------------------------------
+
+$form-element-height:              2.75rem !default;
+$form-element-radius:              $root-radius !default;
+$form-element-border-style:        solid;
+$form-element-border-width:        0 0 1px !default;
+$form-element-border-color:        map-get(map-get($colors, greys), light) !default;
+$form-element-background-color:    map-get(map-get($colors, greys), xlight) !default;
+$form-element-focus-color:         map-get(map-get($colors, brand), primary) !default;
+
+
+//  Misc.
+// --------------------------------------------------------------------------
+
+$media-element-vertical-align:     middle !default;
+
+$selection-background-color:       lighten($color-globalia, 40%) !default;
+$selection-color:                  map-get(map-get($colors, root), white) !default;
+$selection-text-shadow:            none !default;
+
+$table-border-collapse:            collapse !default;
+$table-border-spacing:             0 !default;
+
+
+//  Transitions
+// --------------------------------------------------------------------------
+
+$transition-fast:                  240ms;
+$transition-normal:                480ms;
+$transition-slow:                  720ms;
+
+
+//  Components
+// --------------------------------------------------------------------------
+
+$z-indexes: (
+    overlay:                       30,
+    nav:                           40,
+    modal:                         50
+);
+
+
+// Lazy-loader
+// --------------------------------------------------------------------------
+
+$lazy-loader-background-color:     map-get(map-get($colors, greys), dark) !default;

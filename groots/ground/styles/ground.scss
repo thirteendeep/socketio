@@ -1,0 +1,63 @@
+// ==========================================================================
+// Root = groots
+// ==========================================================================
+
+// Reset and normalize HTML elements
+@import 'seeds/reset';
+
+// Set project's variables
+@import '../../leaves/styles/variables';
+
+// Use project's variables to setup ...
+@import 'seeds/seed';
+
+// ==========================================================================
+// Seeds = groots Utilities
+// ==========================================================================
+
+@import 'seeds/functions';
+@import 'seeds/mixins';
+@import 'seeds/helpers';
+@import 'seeds/animations';
+@import 'seeds/colors';
+@import 'seeds/icon-font';
+
+// ==========================================================================
+// Buds = groots Components
+// ==========================================================================
+
+@import 'buds/typography';
+@import 'buds/banner';
+@import 'buds/breadcrumb';
+@import 'buds/btn';
+@import 'buds/card';
+@import 'buds/form';
+@import 'buds/grid';
+@import 'buds/nav-icon';
+@import 'buds/nav';
+@import 'buds/socials';
+@import 'buds/lazy-loader';
+@import 'buds/modal';
+
+// ==========================================================================
+// groots Mandatories
+// ==========================================================================
+
+[gr-overlay] {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: map-get($z-indexes, overlay);
+    visibility: hidden;
+    overflow: auto;
+    background-color: transparent;
+    transition: background-color $transition-fast map-get($easing, easeinsine);
+
+    .has-nav-open &,
+    .has-modal-open & {
+        background-color: rgba(0, 0, 0, .5);
+        visibility: visible;
+    }
+}

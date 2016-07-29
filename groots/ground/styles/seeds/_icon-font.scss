@@ -1,0 +1,178 @@
+// ==========================================================================
+// Groots Icons font & utilities (social)
+// ==========================================================================
+
+$gr-icon-font: 'GrootsIcons';
+
+@include font-face($gr-icon-font, #{$font-path}/groots-icons, normal, normal);
+
+[class*='gr-icon-']::before {
+    font-family: $gr-icon-font !important; // Use !important to prevent issues with browser extensions that change fonts
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    display: inline-block;
+}
+
+$gr-icon-search: '\f002';
+$gr-icon-mail: '\f003';
+$gr-icon-star-full: '\f005';
+$gr-icon-star-empty: '\f006';
+$gr-icon-check: '\f00c';
+$gr-icon-close: '\f00d';
+$gr-icon-gear: '\f013';
+$gr-icon-download: '\f019';
+$gr-icon-plus: '\f067';
+$gr-icon-minus: '\f068';
+$gr-icon-upload-folder: '\f07c';
+$gr-icon-groots-components: '\f085';
+$gr-icon-star-half: '\f089';
+$gr-icon-upload-drive: '\f093';
+$gr-icon-twitter: '\f099';
+$gr-icon-facebook: '\f09a';
+$gr-icon-rss: '\f09e';
+$gr-icon-googleplus: '\f0d5';
+$gr-icon-linkedin: '\f0e1';
+$gr-icon-upload-ready: '\f0ee';
+$gr-icon-angle-left: '\f104';
+$gr-icon-angle-right: '\f105';
+$gr-icon-angle-up: '\f106';
+$gr-icon-angle-down: '\f107';
+$gr-icon-nope: '\f119';
+$gr-icon-groots-codelines: '\f121';
+$gr-icon-star-half-bordered: '\f123';
+$gr-icon-ask: '\f128';
+$gr-icon-info: '\f129';
+$gr-icon-warning: '\f12a';
+$gr-icon-youtube-old: '\f167';
+$gr-icon-youtube: '\f16a';
+$gr-icon-instagram: '\f16d';
+$gr-icon-groots-docs: '\f19d';
+$gr-icon-groots-styleguide: '\f1b3';
+$gr-icon-loading: '\f1ce';
+$gr-icon-share: '\f1e0';
+$gr-icon-pinterest: '\f231';
+$gr-icon-vimeo: '\f27d';
+
+.gr-icon-groots-back::before {
+    content: $gr-icon-angle-left;
+}
+
+.gr-icon-groots-styleguide::before {
+    content: $gr-icon-groots-styleguide;
+}
+
+.gr-icon-groots-components::before {
+    content: $gr-icon-groots-components;
+}
+
+.gr-icon-groots-codelines::before {
+    content: $gr-icon-groots-codelines;
+}
+
+.gr-icon-groots-docs::before {
+    content: $gr-icon-groots-docs;
+}
+
+.gr-icon-nope::before {
+    content: $gr-icon-nope;
+}
+
+.gr-icon-loading::before {
+    content: $gr-icon-loading;
+}
+
+.gr-icon-search::before {
+    content: $gr-icon-search;
+}
+
+.gr-icon-mail::before {
+    content: $gr-icon-mail;
+}
+
+.gr-icon-gear::before {
+    content: $gr-icon-gear;
+}
+
+.gr-icon-angle-left::before {
+    content: $gr-icon-angle-left;
+}
+
+.gr-icon-angle-right::before {
+    content: $gr-icon-angle-right;
+}
+
+.gr-icon-angle-up::before {
+    content: $gr-icon-angle-up;
+}
+
+.gr-icon-angle-down::before {
+    content: $gr-icon-angle-down;
+}
+
+.gr-icon-star-full::before {
+    content: $gr-icon-star-full;
+}
+
+.gr-icon-star-empty::before {
+    content: $gr-icon-star-empty;
+}
+
+.gr-icon-star-half::before {
+    content: $gr-icon-star-half;
+}
+
+.gr-icon-star-half-bordered::before {
+    content: $gr-icon-star-half-bordered;
+}
+
+.gr-icon-plus::before {
+    content: $gr-icon-plus;
+}
+
+.gr-icon-minus::before {
+    content: $gr-icon-minus;
+}
+
+.gr-icon-check::before {
+    content: $gr-icon-check;
+}
+
+.gr-icon-close::before {
+    content: $gr-icon-close;
+}
+
+.gr-icon-ask::before {
+    content: $gr-icon-ask;
+}
+
+.gr-icon-info::before {
+    content: $gr-icon-info;
+}
+
+.gr-icon-warning::before {
+    content: $gr-icon-warning;
+}
+
+.gr-icon-download::before {
+    content: $gr-icon-download;
+}
+
+.gr-icon-upload-drive::before {
+    content: $gr-icon-upload-drive;
+}
+
+.gr-icon-upload-folder::before {
+    content: $gr-icon-upload-folder;
+}
+
+.gr-icon-upload-ready::before {
+    content: $gr-icon-upload-ready;
+}
+
+.gr-icon-share::before {
+    content: $gr-icon-share;
+}

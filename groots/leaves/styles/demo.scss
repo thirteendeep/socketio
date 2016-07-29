@@ -1,0 +1,540 @@
+// ==========================================================================
+// Leaves
+// ==========================================================================
+
+// All the code here is here for showcase purpose
+
+$root-radius: 0;
+
+$white: color(root, white);
+$black: color(root, black);
+$color-primary: color(brand, primary);
+$color-secondary: color(brand, secondary);
+$color-error: color(validation, error);
+$color-success: color(validation, success);
+
+@import '../../../node_modules/plyr/src/scss/plyr';
+
+@include lazyload();
+
+@include grid('gr-grid', $grid-columns, $grid-gutter-width, $grid-container-width);
+
+@include nav('.demo-nav', $nav-height, $nav-mobile-panel-width, sm);
+
+.demo-nav {
+    transition: background $transition-normal ease-in-out;
+
+    & > div {
+        display: flex;
+        justify-content: center;
+    }
+
+    &.is-open,
+    &.is-scrolled {
+        background: transparentize($black, .25);
+    }
+
+    @include mq(sm) {
+        margin-top: (.5 * $nav-height);
+        justify-content: space-between;
+        box-shadow: 0 (-.5 * $nav-height) 0 0 $color-primary;
+    }
+
+
+    &__nav-icon {
+        color: $white;
+        height: 100%;
+        position: absolute;
+        display: flex;
+        left: (.5 * $grid-gutter-width);
+
+        @include mq(sm) {
+            display: none;
+        }
+    }
+
+    &__brand {
+        img,
+        svg {
+            display: inline-block;
+            height: $nav-height;
+            width: 125px;
+
+            g g:last-child {
+                * {
+                    fill: $white;
+                }
+            }
+        }
+    }
+
+    &__panel {
+        background: $white;
+        padding: $root-vgrid (.5 * $grid-gutter-width);
+
+        @include mq(sm) {
+            background: none;
+            justify-content: flex-end;
+            padding: 0;
+        }
+    }
+
+    &__link {
+        color: $black;
+        border-bottom: $root-border;
+        display: block;
+        padding: (.5 * $root-vgrid) 0;
+
+        @include mq(sm) {
+            color: $white;
+            margin-left: $grid-gutter-width;
+            position: relative;
+            border: 0;
+            display: inline-block;
+            padding: 0;
+
+            .demo-nav__main &::after {
+                transition: $transition-fast ease-in-out;
+                position: absolute;
+                left: 50%;
+                content: '';
+                background: $white;
+                height: 1px;
+                width: 0;
+                bottom: -.5em;
+            }
+
+            &:hover::after,
+            &.active::after {
+                left: calc(50% - (.5 * #{$grid-gutter-width}));
+                width: $grid-gutter-width;
+            }
+        }
+    }
+
+    &__top {
+        @include mq(sm) {
+            background: $color-primary;
+            position: absolute;
+            height: (.5 * $nav-height);
+            //right: calc(-250px - (.5 * #{$grid-gutter-width}));
+            right: (-.5 * $grid-gutter-width);
+            left: calc(-100px - (.5 * #{$grid-gutter-width}));
+            top: (-.5 * $nav-height);
+            padding: 0 (.5 * $grid-gutter-width);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+    }
+
+    /*
+    &__tools {
+        width: 250px;
+
+        .form .form-item--icon-after {
+            margin-bottom: 0;
+            color: $white;
+        }
+    }
+    */
+}
+
+@include flex-banner('.demo-banner', 90vh, 6rem);
+@include flex-banner('.demo-topbanner', 45vh, 3rem);
+@include flex-banner('.demo-halfbanner', 45vh, 3rem);
+
+.demo-banner,
+.demo-topbanner,
+.demo-halfbanner {
+    color: $white;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 12;
+        background-color: transparentize($black, .5);
+    }
+}
+
+.demo-banner__inner {
+    font-size: 1.5em;
+    font-weight: 300;
+}
+
+.demo-topbanner__inner {
+    padding-top: 9rem;
+}
+
+.demo-midbanner {
+    [gr-grid^='row--block'] {
+        background: $color-primary;
+        color: $white;
+
+        @include mq(sm) {
+            &:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+        }
+
+        [gr-grid='block'] {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+
+            &:first-child {
+                @extend %img-cover;
+            }
+
+            &:last-child {
+                padding: (2 * $root-vgrid) (.5 * $grid-gutter-width);
+            }
+
+            @include mq(sm) {
+
+                &:first-child {
+                    img {
+                        position: absolute;
+                    }
+                }
+
+                &:last-child {
+                    max-width: (.5 * $grid-container-width);
+                }
+            }
+        }
+    }
+}
+
+.demo-main {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+}
+
+.demo-section {
+    padding-top: (2 * $root-vgrid);
+    padding-bottom: (2 * $root-vgrid);
+}
+
+.demo-header {
+    text-align: center;
+    padding-bottom: (2 * $root-vgrid);
+}
+
+.demo-listing {
+    img {
+        @extend %img-cover;
+    }
+
+    [gr-grid^='row--block']:not(:last-child) {
+        margin-bottom: (2 * $root-vgrid);
+    }
+}
+
+.demo-footer {
+    background: color(greys, xdark);
+    color: $white;
+    font-size: .75rem;
+    position: relative;
+    z-index: 12;
+
+
+    [gr-grid] {
+        padding: $root-vgrid $grid-gutter-width;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-direction: column;
+
+        @include mq(sm) {
+            flex-direction: row;
+        }
+
+        .demo__copyright {
+            padding-bottom: $root-vgrid;
+
+            @include mq(sm) {
+                padding-bottom: 0;
+            }
+        }
+    }
+}
+
+.demo-pagination {
+    text-align: center;
+
+    .pagination__btn--prev::before,
+    .pagination__btn--next::before {
+        font-family: $gr-icon-font;
+        line-height: inherit;
+        display: inline-block;
+        border: 2px solid currentColor;
+        color: $color-primary;
+        height: $root-vgrid;
+        width: $root-vgrid;
+        line-height: calc(#{$root-vgrid} - 4px);
+        text-align: center;
+        border-radius: 100%;
+        font-weight: 600;
+    }
+
+    .pagination__btn--prev::before {
+        content: $gr-icon-angle-left;
+        margin-right: .5em;
+    }
+
+    .pagination__btn--next::before {
+        content: $gr-icon-angle-right;
+        margin-left: .5em;
+    }
+
+    .pagination__link,
+    .pagination__link--current,
+    .pagination__link--disabled {
+        color: $color-primary;
+        margin: 0 .5em;
+    }
+
+    .pagination__link--current {
+        color: $color-secondary;
+    }
+
+    .pagination__btn--disabled,
+    .pagination__link--disabled {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .pagination__btn--disabled::before,
+    .pagination__link--disabled {
+        color: transparentize(color(greys, base), .75);
+    }
+}
+
+hr {
+    margin: $root-vgrid 0;
+    height: 1px;
+    background: transparentize($black, .8);
+
+    @include mq(sm) {
+        margin: (1.5 * $root-vgrid) 0;
+    }
+}
+
+@include typography();
+
+.typography {
+    [class^='btn--'] {
+        margin-bottom: $root-vgrid;
+    }
+}
+
+%btn {
+    @include btn-size(.875rem, .875rem, .875rem, 0);
+    @include mq(sm) {
+        @include btn-size(1rem, 1rem, 1rem, 0);
+    }
+
+    display: inline-block;
+    text-transform: uppercase;
+    border-style: solid;
+    border-width: 2px;
+    transition: $transition-normal ease-in-out;
+    cursor: pointer;
+}
+
+.btn--primary {
+    @extend %btn;
+    @include btn-colors($white, $color-primary, $color-primary);
+    @include mq(md) {
+        &:hover {
+            @include btn-colors(inherit, transparent, $color-primary);
+        }
+    }
+}
+
+.btn--ghost {
+    @extend %btn;
+    @include btn-colors($white, transparent, $white);
+    @include mq(md) {
+        &:hover {
+            @include btn-colors(color(greys, xdark), $white, $white);
+        }
+    }
+}
+
+@include form();
+@include form-radio();
+@include form-checkbox();
+@include form-select();
+@include form-input-file();
+@include form-validation();
+
+.form {
+    label {
+        font-size: .75em;
+    }
+
+    .file-upload-wrapper label,
+    .radio-wrapper label,
+    .checkbox-wrapper label {
+        font-size: 1em;
+    }
+}
+
+.social-icons--link {
+
+    @extend %social-icons;
+
+    a {
+        color: color(greys, xdark);
+
+        & + a {
+            margin-left: .25em;
+        }
+
+        span {
+            @extend %sr-only;
+        }
+    }
+
+    @each $social, $icon in $socials {
+        [href*='#{$social}']:hover {
+            color: map-get($icon, color);
+        }
+    }
+
+    a::before {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        background: $white;
+        border-radius: 100%;
+        line-height: 40px;
+        font-size: 1.25em;
+    }
+}
+
+.social-icons--share {
+    @include socials('background');
+
+    a {
+        color: $white;
+        padding: $root-padding;
+
+        span {
+            padding-left: $root-padding;
+        }
+    }
+}
+
+@include breadcrumb();
+
+@include card('.demo-card', false, false, $root-vgrid);
+
+.demo-card {
+    position: relative;
+    background: $white;
+    border: 1px solid color(greys, xlight);
+    transition: transform $transition-normal ease-in-out, box-shadow $transition-normal ease-in-out;
+
+    &__footer {
+        text-align: center;
+    }
+
+    &__hover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 4;
+        background: transparentize($white, 1);
+        transition: background $transition-normal ease-in-out;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    &:hover {
+        transform: translateY(-.5em);
+        box-shadow: 0 5px 7.5px rgba(0, 0, 0, .3);
+
+        .demo-card__hover {
+            background: transparentize($white, .2);
+        }
+    }
+}
+
+.demo-listing {
+    [gr-lazyloader] {
+        @include keep-ratio('16/9');
+    }
+}
+
+@include modal('.modal', xs, 25rem);
+
+[gr-modal-content] header {
+    margin-top: 0;
+    text-align: center;
+}
+
+
+.demo-expandable {
+
+    padding-bottom: 0;
+
+    [gr-grid^='row--block'] {
+        justify-content: center;
+    }
+
+    .expander {
+        &__trigger {
+            @extend %img-cover;
+            cursor: pointer;
+        }
+
+        &__wrapper {
+            opacity: 0;
+            transform: scale(.9);
+            padding: $root-vgrid 0;
+        }
+
+        &__content {
+            position: absolute;
+            top: auto;
+            left: 0;
+            right: 0;
+            display: block;
+            height: 0;
+            overflow: hidden;
+            transition: height $transition-fast linear;
+
+        }
+    }
+
+    [gr-expander] {
+        position: static;
+        transition: padding-bottom $transition-fast linear;
+
+        &.is-expanded .expander__wrapper {
+            transition: all $transition-fast linear;
+            transform: scale(1);
+            opacity: 1;
+
+        }
+    }
+}
+
+.demo-map {
+    height: 45vh;
+    width: 100%;
+}

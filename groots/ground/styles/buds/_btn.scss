@@ -1,0 +1,96 @@
+// ==========================================================================
+// Buttons
+// ==========================================================================
+
+//
+// Groots basic button styles
+//
+// TODO: Create custom variable for btn?
+//
+
+// The mixin way
+
+@mixin btn(
+    $class:             '.btn',
+    $btn-font-size:     $root-font-size,
+    $btn-font-color:    color(root, white),
+    $btn-padding-y:     $root-padding,
+    $btn-padding-x:     $root-padding,
+    $btn-border-radius: $root-radius,
+    $btn-bg-color:      color(brand, primary),
+    $btn-border-color:  transparent
+) {
+    #{$class} {
+        @include btn-size($btn-font-size, $btn-padding-y, $btn-padding-x, $btn-border-radius);
+        @include btn-colors($btn-font-color, $btn-bg-color, $btn-border-color);
+        display: inline-block;
+        border-width: 1px;
+        border-style: solid;
+
+        &[disabled] {
+            background: color('greys', 'light');
+            cursor: not-allowed;
+        }
+    }
+}
+
+// the size
+@mixin btn-size(
+    $btn-font-size:     $root-font-size,
+    $btn-padding-y:     $root-padding,
+    $btn-padding-x:     $root-padding,
+    $btn-radius:        $root-radius
+) {
+    font-size: $btn-font-size;
+    padding: $btn-padding-y $btn-padding-x;
+    border-radius: $btn-radius;
+}
+
+@mixin btn-colors(
+    $btn-font-color:    $white,
+    $btn-bg-color:      color(brand, primary),
+    $btn-border-color:  transparent
+) {
+    color: $btn-font-color;
+    background-color: $btn-bg-color;
+    border-color: $btn-border-color;
+}
+
+// the look
+@mixin button-variant($bg-color, $bg-active, $border-color, $border-active, $effect: null) {
+    @if ($effect == flatt) {
+        position: relative;
+        background-color: $bg-color;
+        overflow: hidden;
+        vertical-align: top;
+        z-index: 1;
+        transition: color .3s;
+
+        &::after {
+            position: absolute;
+            top: 90%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: $bg-active;
+            content: '';
+            z-index: -2;
+            transition: transform .3s;
+        }
+
+        &:hover::after {
+            transform: translateY(-80%);
+            transition: transform .3s;
+        }
+    } @else if ($effect == globalia) {
+        color: $color--globalia;
+    } @else {
+        background-color: $bg-color;
+        border-color: $border-color;
+
+        &:hover {
+            background-color: $bg-active;
+            border-color: $border-active;
+        }
+    }
+}

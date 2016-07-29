@@ -1,0 +1,95 @@
+// ==========================================================================
+// Helpers
+// ==========================================================================
+
+%clearfix {
+    &::after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+}
+
+%sr-only {
+    display: none;
+}
+
+%inline-list {
+    list-style: none;
+
+    li {
+        display: inline-block;
+    }
+}
+
+%bleed {
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+}
+
+%img-responsive,
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+%img-cover,
+.img-cover {
+    display: block;
+    width: 100%;
+
+    & > img {
+        object-fit: cover;
+        display: block;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+    }
+
+    // For IE9, IE10 and IE11
+    objectfit {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center center;
+
+        img {
+            opacity: 0;
+        }
+    }
+}
+
+%img-broken {
+    display: block;
+    position: relative;
+    text-align: center;
+    font-size: 1rem;
+
+    &::before,
+    &::after {
+        content: '';
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+    }
+
+    &::before {
+        background-color: color(validation, error);
+        z-index: 1;
+        min-height: 3rem;
+    }
+
+    &::after {
+        content: 'Broken Image';
+        z-index: 2;
+        padding: 1rem;
+    }
+}
+

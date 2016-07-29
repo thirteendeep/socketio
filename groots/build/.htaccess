@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteRule ^$ /groots [L]
+RewriteRule ^groots groots/gui.php [L,QSA]

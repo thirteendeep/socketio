@@ -1,0 +1,115 @@
+// ==========================================================================
+// Typography
+// ==========================================================================
+
+$heading-max: if(variable-exists(heading-max), $heading-max, 3em);
+$modular-scale: sqrt(sqrt($heading-max / 1em));
+
+@for $i from 1 through 5 {
+    %h#{$i} {
+        font-size: pow($modular-scale, (5 - $i)) * 1em;
+        line-height: floor(pow($modular-scale, (5 - $i))) * $root-vgrid;
+        margin-top: $root-vgrid;
+        margin-bottom: $root-vgrid;
+        font-weight: normal;
+    }
+}
+
+%link {
+    color: currentColor;
+    text-decoration: none;
+}
+
+%unordered-list,
+%ordered-list {
+    li {
+        position: relative;
+        list-style-position: inside;
+
+        ul,
+        ol {
+            margin: 0;
+        }
+
+        li {
+            padding-left: $root-hgrid;
+        }
+    }
+}
+
+%ordered-list {
+    counter-reset: item;
+
+    li {
+        list-style: none;
+
+        &::before {
+            content: counters(item, '.') ' - ';
+            counter-increment: item;
+        }
+
+        ol {
+            counter-reset: item;
+        }
+    }
+}
+
+%address {
+    font-style: normal;
+}
+
+
+@mixin typography($class: '.typography') {
+
+    @for $i from 1 through 5 {
+        .h#{$i} {
+            @extend %h#{$i};
+        }
+    }
+
+    #{$class} {
+        line-height: $root-vgrid;
+        margin-top: (-1 * $root-vgrid);
+        margin-bottom: (-1 * $root-vgrid);
+
+        &::before,
+        &::after {
+            content: '';
+            display: table;
+            clear: both;
+        }
+
+        @for $i from 1 through 5 {
+            h#{$i} {
+                @extend %h#{$i};
+            }
+        }
+
+        a:not([class]) {
+            @extend %link;
+        }
+
+        ul {
+            @extend %unordered-list;
+        }
+
+        ol {
+            @extend %ordered-list;
+        }
+
+        address {
+            @extend %address;
+        }
+
+        ul,
+        ol,
+        address,
+        p {
+            margin-top: $root-vgrid;
+            margin-bottom: $root-vgrid;
+        }
+
+    }
+}
+
+

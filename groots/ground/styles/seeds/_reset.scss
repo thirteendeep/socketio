@@ -1,0 +1,303 @@
+// ==========================================================================
+// Normalization
+// ==========================================================================
+
+// Globals
+// --------------------------------------------------------------------------
+
+:root {
+    -ms-overflow-style: -ms-autohiding-scrollbar; // Edge 12+, Internet Explorer 11-
+    // overflow-y: scroll; // All browsers without overlaying scrollbars
+    -webkit-text-size-adjust: 100%; // iOS 8+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+// Make viewport responsive
+//
+// @viewport is needed because IE 10+ doesn't honor <meta name="viewport"> in
+// some cases. See http://timkadlec.com/2012/10/ie10-snap-mode-and-responsive-design/.
+// Eventually @viewport will replace <meta name="viewport">.
+//
+// However, `device-width` is broken on IE 10 on Windows (Phone) 8,
+// (see http://timkadlec.com/2013/01/windows-phone-8-and-device-width/ and https://github.com/twbs/bootstrap/issues/10497)
+// and the fix for that involves a snippet of JavaScript to sniff the user agent
+// and apply some conditional CSS.
+
+@at-root {
+    @viewport {
+        width: device-width;
+    }
+}
+
+// Universal inheritance
+// --------------------------------------------------------------------------
+
+*,
+::before,
+::after {
+    box-sizing: inherit;
+}
+
+* {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+::before,
+::after {
+    text-decoration: inherit;
+    vertical-align: inherit;
+}
+
+// Layouts
+// --------------------------------------------------------------------------
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+::before,
+::after {
+    border-style: solid;
+    border-width: 0;
+}
+
+main {
+    display: block; // Android 4.3-, Internet Explorer 11-, Windows Phone 8.1+
+}
+
+details {
+    display: block; // Edge 12+, Firefox 40+, Internet Explorer 11-, Windows Phone 8.1+
+}
+
+summary {
+    display: block; // Firefox 40+, Internet Explorer 11-, Windows Phone 8.1+
+}
+
+progress {
+    display: inline-block; // Internet Explorer 11-, Windows Phone 8.1+
+}
+
+template { // Internet Explorer 10-
+    display: none; // Android 4.3-, Internet Explorer 11-, iOS 7-, Safari 7-, Windows Phone 8.1+
+}
+
+[hidden] {
+    display: none; // Internet Explorer 10-
+}
+
+nav ol,
+nav ul {
+    list-style: none;
+}
+
+// Typography
+// --------------------------------------------------------------------------
+
+small {
+    font-size: 75%; // All browsers
+}
+
+b,
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}
+
+a {
+    text-decoration: none;
+    background-color: transparent; // Internet Explorer 10
+
+    &:active,
+    &:hover {
+        outline: 0;
+    }
+}
+
+sub,
+sup {
+    font-size: .75em;
+    line-height: 0; // All browsers
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -.5em;
+}
+
+sub {
+    bottom: -.25em;
+}
+
+abbr {
+    &[title] {
+        border-bottom: 1px dotted; // Internet Explorer 11-, Safari, Chrome
+    }
+}
+
+dfn {
+    font-style: italic; // Safari, Chrome
+}
+
+pre {
+    overflow: auto; // Internet Explorer 11-
+}
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace;
+    font-size: inherit;
+}
+
+// Forms
+// --------------------------------------------------------------------------
+
+fieldset {
+    min-width: 0; // Fix overflow custom field
+}
+
+:focus {
+    outline-style: none;
+    box-shadow: none;
+}
+
+button,
+input,
+select,
+textarea {
+    color: inherit;
+    font-family: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+
+input {
+    -webkit-border-radius: 0; // iOS 8+
+
+    &[type='button'],
+    &[type='reset'],
+    &[type='submit'] {
+        -webkit-appearance: button; // iOS 8+
+    }
+
+    &[type='number'] {
+        width: auto; // Firefox 36+
+    }
+
+    &[type='search'] {
+        -webkit-appearance: textfield; // Chrome 45+, Safari 9+
+
+        &::-webkit-search-cancel-button,
+        &::-webkit-search-decoration {
+            -webkit-appearance: none; // Chrome 45+, Safari 9+
+        }
+    }
+}
+
+button {
+    overflow: visible; // Internet Explorer 11-
+    -webkit-appearance: button; // iOS 8+
+}
+
+select {
+    -moz-appearance: none;    // Firefox 40+
+    -webkit-appearance: none; // Chrome 45+
+
+    &::-ms-expand {
+        display: none;        // Edge 12+, Internet Explorer 11-
+    }
+
+    &::-ms-value {
+        color: currentColor;  // Edge 12+, Internet Explorer 11-
+    }
+}
+
+textarea {
+    overflow: auto; // Edge 12+, Internet Explorer 11-
+    resize: vertical;
+}
+
+// Media
+// --------------------------------------------------------------------------
+
+svg:not(:root) {
+    overflow: hidden; // Internet Explorer 11-
+}
+
+audio:not([controls]) {
+    display: none; // Chrome 44-, iOS 8+, Safari 9+
+}
+
+// Miscellaneous
+// --------------------------------------------------------------------------
+
+// Avoid 300ms click delay on touch devices that support the `touch-action` CSS property.
+//
+// In particular, unlike most other browsers, IE11+Edge on Windows 10 on touch devices and IE Mobile 10-11
+// DON'T remove the click delay when `<meta name="viewport" content="width=device-width">` is present.
+// However, they DO support removing the click delay via `touch-action: manipulation`.
+// See:
+// * http://v4-alpha.getbootstrap.com/content/reboot/#click-delay-optimization-for-touch
+// * http://caniuse.com/#feat=css-touch-action
+// * http://patrickhlauke.github.io/touch/tests/results/#suppressing-300ms-delay
+
+a,
+area,
+button,
+[role="button"],
+input,
+label,
+select,
+summary,
+textarea {
+    touch-action: manipulation;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+    width: 100%;
+}
+
+// Specify the progress cursor of updating elements
+
+[aria-busy='true'] {
+    cursor: progress;
+}
+
+// Specify the pointer cursor of trigger elements
+
+[aria-controls] {
+    cursor: pointer;
+}
+
+// Specify the unstyled cursor of disabled, not-editable, or otherwise inoperable elements
+
+[aria-disabled] {
+    cursor: default;
+}
+
+// Specify the style of visually hidden yet accessible elements
+
+[hidden][aria-hidden='false'] {
+    clip: rect(0 0 0 0);
+    display: inherit;
+    position: absolute;
+
+    &:focus {
+        clip: auto;
+    }
+}
+

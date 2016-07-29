@@ -1,0 +1,93 @@
+// ==========================================================================
+// Navigation Icon (responsive CTA)
+// ==========================================================================
+
+// <div class="$nav-icon-class" gr-nav-trigger><img src="" class="svg"></div>
+
+@mixin nav-icon-svg($nav-icon-class: '.nav-icon') {
+
+    #{$nav-icon-class} {
+        position: relative;
+        display: block;
+        cursor: pointer;
+        color: inherit;
+        background: none;
+
+        svg {
+            position: relative;
+            width: auto;
+            height: auto;
+        }
+
+        rect {
+            transition: transform 150ms ease-in-out;
+            transform-origin: 50%;
+            transform: rotate(0);
+            fill: currentColor;
+        }
+
+        // #top:       g:nth-of-type(1)
+        // #middle:    g:nth-of-type(2)
+        // #bottom:    g:nth-of-type(3)
+
+        g {
+            transition: transform 150ms ease-in-out 200ms;
+        }
+
+        g:nth-of-type(2) {
+            rect {
+                opacity: 1;
+                transition: opacity 250ms ease-in-out 50ms;
+            }
+        }
+    }
+
+    [gr-nav].is-open #{$nav-icon-class}[gr-nav-trigger=squeeze] {
+        rect {
+            transition: transform 150ms ease-in-out 250ms;
+        }
+
+        g:nth-of-type(1),
+        g:nth-of-type(3) {
+            transition: transform 150ms ease-in-out;
+        }
+
+        g:nth-of-type(1) {
+            transform: translateY(10px);
+
+            rect {
+                transform: rotate(45deg);
+            }
+        }
+
+        g:nth-of-type(2) {
+            rect {
+                opacity: 0;
+            }
+        }
+
+        g:nth-of-type(3) {
+            transform: translateY(-10px);
+
+            rect {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+
+    [gr-nav].is-open #{$nav-icon-class}[gr-nav-trigger=collapse] {
+
+        g:nth-of-type(1),
+        g:nth-of-type(2) {
+            transition: transform 150ms ease-in-out;
+        }
+
+        g:nth-of-type(1) {
+            transform: translateY(20px);
+        }
+
+        g:nth-of-type(2) {
+            transform: translateY(10px);
+        }
+    }
+}

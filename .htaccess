@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule /groots /groots/gui/index.php

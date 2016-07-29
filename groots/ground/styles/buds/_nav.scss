@@ -1,0 +1,166 @@
+// ==========================================================================
+// Navigation
+// ==========================================================================
+
+// <nav gr-nav-effect="reveal-left" gr-nav-sticky="always" class="$nav-class">
+//     <div class="$nav-class__nav-icon" gr-nav-trigger><img src="" class="svg"></div>
+//     <a class="$nav-class__brand" href=""><img src="" alt="" /></a>
+//     <section class="$nav-class__panel" gr-nav-panel>
+//         <ul class="$nav-class__main">
+//             <li><a href="">...</a></li>
+//             ...
+//         </ul>
+//     </section>
+// </nav>
+
+// TODO : Sticky
+
+@mixin nav($nav-class: '.nav', $nav-height: 5rem, $nav-mobile-panel-width: 20rem, $nav-breakpoint: md) {
+
+    @if $nav-breakpoint {
+        @include nav-icon-svg('#{$nav-class}__nav-icon');
+        @if $nav-breakpoint and $nav-breakpoint!=always {
+            @include mq($nav-breakpoint) {
+                #{$nav-class}__nav-icon {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    #{$nav-class} {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        height: $nav-height;
+        z-index: map-get($z-indexes, nav);
+        padding: 0 (.5 * $grid-gutter-width);
+
+        &[gr-nav-sticky='always'] {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: auto;
+        }
+    }
+
+    #{$nav-class}__panel {
+        position: fixed;
+        //top: $nav-height;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        width: $nav-mobile-panel-width;
+        max-width: 100vw;
+        height: 100vh;
+        max-height: 100vh;
+        transform-style: preserve-3d;
+        will-change: transform;
+        transition: transform $transition-fast map-get($easing, easeinsine);
+        overflow: visible;
+        overflow-y: auto;
+        z-index: 1 + map-get($z-indexes, nav);
+
+        ul {
+            list-style-type: none;
+        }
+
+        @if $nav-breakpoint and $nav-breakpoint!=always {
+            @include mq($nav-breakpoint) {
+                position: static;
+                transform: none;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                flex: 1 1 0;
+                height: $nav-height;
+                overflow-y: visible;
+
+                ul {
+                    li {
+                        display: inline-block;
+                    }
+                }
+            }
+        }
+    }
+
+    .has-nav-open {
+        overflow: hidden;
+    }
+
+    #{$nav-class}[gr-nav-effect='reveal-left'] {
+        #{$nav-class}__panel {
+            top: $nav-height;
+            left: -$nav-mobile-panel-width;
+        }
+
+        [gr-handler].has-nav-open > & #{$nav-class}__panel {
+            transform: translateX($nav-mobile-panel-width);
+        }
+    }
+
+    #{$nav-class}[gr-nav-effect='reveal-right'] {
+        #{$nav-class}__panel {
+            top: $nav-height;
+            right: -$nav-mobile-panel-width;
+        }
+
+        [gr-handler].has-nav-open > & #{$nav-class}__panel {
+            transform: translateX(-$nav-mobile-panel-width);
+        }
+    }
+
+    #{$nav-class}[gr-nav-effect='offset-left'] {
+        #{$nav-class}__panel {
+            top: 0;
+            left: -$nav-mobile-panel-width;
+        }
+
+        &,
+        & ~ * {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform $transition-fast map-get($easing, easeinsine);
+        }
+
+        [gr-handler].has-nav-open > &,
+        [gr-handler].has-nav-open > & ~ * {
+            transform: translateX($nav-mobile-panel-width);
+        }
+    }
+
+    #{$nav-class}[gr-nav-effect='offset-right'] {
+        #{$nav-class}__panel {
+            top: 0;
+            right: -$nav-mobile-panel-width;
+        }
+
+        &,
+        & ~ * {
+            transform-style: preserve-3d;
+            will-change: transform;
+            transition: transform $transition-fast map-get($easing, easeinsine);
+        }
+
+        [gr-handler].has-nav-open > &,
+        [gr-handler].has-nav-open > & ~ * {
+            transform: translateX(-$nav-mobile-panel-width);
+        }
+    }
+
+    @if $nav-breakpoint and $nav-breakpoint!=always {
+        @include mq($nav-breakpoint) {
+            #{$nav-class}[gr-nav-effect] #{$nav-class}__panel {
+                left: auto;
+                right: auto;
+                transform: none;
+                transition: none;
+            }
+        }
+    }
+}

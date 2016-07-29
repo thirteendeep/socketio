@@ -1,0 +1,36 @@
+// ==========================================================================
+// Lazy-loading
+// ==========================================================================
+
+@mixin lazyload() {
+
+    [gr-lazyloader] {
+
+        overflow: hidden;
+        background-color: $lazy-loader-background-color;
+        padding: 0;
+
+        &::after {
+            font-family: $gr-icon-font;
+            content: $gr-icon-loading;
+            z-index: 2;
+            position: absolute;
+            left: 1rem;
+            bottom: 1rem;
+            color: white;
+            @include animate(spin, $transition-slow, infinite, linear);
+        }
+
+        img {
+            z-index: 3;
+            filter: blur(20px);
+            opacity: 0;
+            transition: opacity $transition-fast map-get($easing, easeinsine), filter $transition-slow map-get($easing, easeinsine);
+
+            &.is-lazyloaded {
+                opacity: 1;
+                filter: blur(0);
+            }
+        }
+    }
+}

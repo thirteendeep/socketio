@@ -1,0 +1,56 @@
+// ==========================================================================
+// Banners
+// ==========================================================================
+
+// <section class="$flex-banner-class">
+//     <div class="$flex-banner-class__cover"><img src="" alt=""></div>
+//     <div class="$flex-banner-class__inner"> ... </div>
+// </header>
+
+@mixin modal($modal-class: '.modal', $modal-breakpoint: sm, $modal-width: 25rem) {
+
+    [gr-modal-box] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $white;
+        z-index: map-get($z-indexes, modal);
+        visibility: hidden;
+        padding: $root-padding;
+
+        &.is-visible {
+            visibility: visible;
+        }
+
+        @include mq($modal-breakpoint) {
+            top: 50%;
+            left: 50%;
+            width: $modal-width;
+            right: auto;
+            bottom: auto;
+            transform: translate3d(-50%, -50%, 0);
+        }
+    }
+
+    [gr-modal-close] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2rem;
+        width: 2rem;
+        text-align: center;
+        cursor: pointer;
+        background: none;
+
+        &::before {
+            font-family: $gr-icon-font;
+            content: $gr-icon-close;
+        }
+    }
+
+    .has-modal-open {
+        overflow: hidden;
+    }
+}

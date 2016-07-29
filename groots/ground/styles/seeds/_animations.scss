@@ -1,0 +1,74 @@
+// ==========================================================================
+// Animations
+// ==========================================================================
+
+
+// Custom easing mapping
+// -------------
+
+$easing: (
+    easeinsine:     cubic-bezier(.47, 0, .745, .715),
+    easeoutsine:    cubic-bezier(.39, .575, .565, 1),
+    easeinoutsine:  cubic-bezier(.39, .575, .565, 1),
+    //
+    easeinquad:     cubic-bezier(.55, .085, .68, .53),
+    easeoutquad:    cubic-bezier(.25, .46, .45, .94),
+    easeinoutquad:  cubic-bezier(.25, .46, .45, .94),
+    //
+    easeincubic:    cubic-bezier(.55, .055, .675, .19),
+    easeoutcubic:   cubic-bezier(.215, .61, .355, 1),
+    easeinoutcubic: cubic-bezier(.215, .61, .355, 1),
+    //
+    easeinquart:    cubic-bezier(.895, .03, .685, .22),
+    easeoutquart:   cubic-bezier(.165, .84, .44, 1),
+    easeinoutquart: cubic-bezier(.165, .84, .44, 1),
+    //
+    easeinquint:    cubic-bezier(.755, .05, .855, .06),
+    easeoutquint:   cubic-bezier(.23, 1, .32, 1),
+    easeinoutquint: cubic-bezier(.23, 1, .32, 1),
+    //
+    easeinexpo:     cubic-bezier(.95, .05, .795, .035),
+    easeoutexpo:    cubic-bezier(.19, 1, .22, 1),
+    easeinoutexpo:  cubic-bezier(.19, 1, .22, 1),
+    //
+    easeincirc:     cubic-bezier(.6, .04, .98, .335),
+    easeoutcirc:    cubic-bezier(.075, .82, .165, 1),
+    easeinoutcirc:  cubic-bezier(.075, .82, .165, 1),
+    //
+    easeinback:     cubic-bezier(.6, -.28, .735, .045),
+    easeoutback:    cubic-bezier(.175, .885, .32, 1.275),
+    easeinoutback:  cubic-bezier(.68, -.55, .265, 1.55)
+);
+
+
+@mixin keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin animate($name, $duration, $iteration, $direction) {
+    animation-duration: $duration;
+    animation-iteration-count: $iteration;
+    animation-name: $name;
+    animation-direction: $direction;
+}
+
+@include keyframes(spin) {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+

@@ -1,0 +1,18 @@
+@media print {
+
+    nav,
+    .nav,
+    .menu {
+        display: none !important;
+    }
+
+    button,
+    .button,
+    .btn {
+        display: none !important;
+    }
+
+    a::after {
+        content: none !important;
+    }
+}

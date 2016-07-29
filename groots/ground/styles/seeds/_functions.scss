@@ -1,0 +1,88 @@
+// ==========================================================================
+// Functions
+// ==========================================================================
+
+/// Strips the unit from a number.
+/// --------------------------------------------------
+///
+/// @param {Number (With Unit)} $value
+///
+/// @example scss - Usage
+///   $dimension: strip-units(10em);
+///
+/// @example css - CSS Output
+///   $dimension: 10;
+///
+/// @return {Number (Unitless)}
+
+@function strip-unit($number) {
+    @if type-of($number) == 'number' and not unitless($number) {
+        @return $number / ($number * 0 + 1);
+    }
+
+    @return $number;
+}
+
+/// Convert pixels to ems
+/// --------------------------------------------------
+///
+/// eg. for a relational value of 12px write em(12px) when the parent is 16px
+/// if the parent is another value say 24px write em(12px, 24px)
+///
+/// @example scss - Usage
+///   font-size: em(12px);
+///   font-size: em(12px, 24px);
+///   padding: em(12px 20px, 24px);
+
+@function em($values, $context: $root-font-size) {
+    $em: ();
+    @each $value in $values {
+        @if $value == 0 or $value == auto {
+            $em: append($em, $value);
+        }
+        @else {
+            $em: append($em, ( ( $value/ $context ) * 1em ));
+        }
+    }
+    @return $em;
+}
+
+// Convert pixels to rems
+// eg. for a relational value of 12px write rem(12)
+// Assumes $em-base is the font-size of <html>
+
+@function remy($pxval) {
+    @if not unitless($pxval) {
+        $pxval: strip-unit($pxval);
+    }
+    $base: $root-font-size;
+    @if not unitless($base) {
+        $base: strip-unit($base);
+    }
+    @return ($pxval / $base) * 1rem;
+}
+
+/// Do your Math!
+/// --------------------------------------------------
+///
+
+@function sqrt($number) {
+    $x0: 1;
+    $x1: $x0;
+    @for $i from 1 through 10 {
+        $x1: $x0 - ($x0 * $x0 - abs($number)) / (2 * $x0);
+        $x0: $x1;
+    }
+    @return $x1;
+}
+
+@function pow($number, $exponent) {
+    $x0: 1;
+    $number: $x0 * $number;
+    @if $exponent > 0 {
+        @for $i from 1 through $exponent {
+            $x0: $x0 * $number;
+        }
+    }
+    @return $x0;
+}

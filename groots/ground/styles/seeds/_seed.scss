@@ -1,0 +1,78 @@
+// ==========================================================================
+// Normalization
+// ==========================================================================
+
+// Globals
+// --------------------------------------------------------------------------
+
+:root {
+    color: if(variable-exists(root-color), $root-color, #333);
+    font-size: if(variable-exists(root-font-size), $root-font-size, 16px);
+    line-height: if(variable-exists(root-line-height), $root-line-height, 1.5);
+    font-family: if(variable-exists(root-font-family), $root-font-family, $font-primary);
+    text-rendering: if(variable-exists(root-text-rendering), $root-text-rendering, optimizeLegibility);
+}
+
+// Media
+// --------------------------------------------------------------------------
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: if(variable-exists(media-element-vertical-align), $media-element-vertical-align, middle);
+}
+
+.svg {
+    display: none;
+}
+
+img {
+    @extend %img-broken;
+}
+
+// Miscellaneous
+// --------------------------------------------------------------------------
+
+// Specify the background color, font color and drop shadow of text selections
+
+/*
+::-moz-selection {
+    background-color: $selection-background-color; // required when declaring ::selection
+    color: $selection-color;
+    text-shadow: $selection-text-shadow;
+}
+
+::selection {
+    background-color: $selection-background-color; // required when declaring ::selection
+    color: $selection-color;
+    text-shadow: $selection-text-shadow;
+}
+*/
+
+// Suppress the focus outline on elements that cannot be accessed via keyboard.
+// This prevents an unwanted focus outline from appearing around elements that might still respond to pointer events.
+//
+// Credit: https://github.com/suitcss/base
+
+[tabindex="-1"]:focus {
+    outline: none !important;
+}
+
+
+// ==========================================================================
+// groots'Core Configuration
+// ==========================================================================
+
+// Grid rythm
+// --------------------------------------------------------------------------
+
+$root-hgrid: $grid-gutter-width;
+$root-vgrid: $root-line-height * 1rem;
+
+@if ($root-font-size * $root-line-height < $root-hgrid) {
+    // Set the minimum vertical rythm at the gutter-width
+    $root-vgrid: ($root-hgrid/ $root-font-size) * 1rem;
+}

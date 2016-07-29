@@ -1,0 +1,33 @@
+// ==========================================================================
+// Colors
+// ==========================================================================
+
+// @function color()
+// --------------------------------------------------------------------------
+// Returns a value from the specified set with the specified key
+//
+// @example scss - Usage
+//   color: color('greys', 'xlight');
+//
+// @example css - CSS Output
+//   color: #E8E8E8;
+//
+
+@function color($color-name, $color-value) {
+    @return map-get(map-get($colors, $color-name), $color-value);
+}
+
+// Colors mapping (for display in GUI)
+// --------------------------------------------------------------------------
+
+@each $label-map, $color-map in $colors {
+    @each $label, $color in $color-map {
+        .bg-#{$label-map}-#{$label} {
+            background-color: $color;
+
+            .gui-main &::after {
+                content: '#{$color}';
+            }
+        }
+    }
+}
