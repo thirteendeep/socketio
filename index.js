@@ -20,7 +20,7 @@ io.on('connection', function(socket){
  io.emit('code', 'New connection: '+ clientIp);
 });
 
-http.listen(3000, function(){
+http.listen(3000, "0.0.0.0",  function(){
     console.log('listening on *:3000');
 });
 
@@ -30,12 +30,12 @@ io.on('connection', function(socket){
         console.log('message: ' + msg);
         if (msg == 1) {
             console.log('OMG Rainbows!'.green);
-            io.emit('code', "Start application");
+            io.emit('code', "close application");
             process.exit(1);
         }
         else {
             console.log('Unknow code'.inverse);
-            io.emit('code', 'Unknow code');
+            io.emit('code', 'Unknow code: ' +  msg);
         }
     });
 });
