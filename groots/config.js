@@ -8,7 +8,7 @@ module.exports = {
     name: 'groots',
     type: 'craft', // custom, craft or wordpress
     publicPath: '', // not required for craft or wordpress project type
-    gui: true,
+    gui: false,
     fontAwesome: true,
     faviconBG: '#ffffff',
     theme: '#1982c4', // used for safari tab icon and android menu bar color
