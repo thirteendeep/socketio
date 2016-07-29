@@ -5,8 +5,8 @@ var colors = require('colors');
 var five = require("johnny-five");
 //var board = new five.Board();
 
-
-
+var path = require('path');
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function(req, res){
     res.sendfile('index.html');
