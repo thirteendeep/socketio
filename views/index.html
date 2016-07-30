@@ -1,0 +1,55 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>nodeBot - v0.0.1</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/dist/css/groots.css">
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body>
+  <ul class="console" nodebot-console>
+
+  </ul>
+<ul class="themeBox">
+    <li title="#588C7E" style="background: #588C7E"></li>
+    <li title="#F2E394" style="background: #F2E394"></li>
+    <li title="#F2AE72" style="background: #F2AE72"></li>
+    <li title="#D96459" style="background: #D96459"></li>
+    <li title="#8C4646" style="background: #8C4646"></li>
+  </ul>
+  <div gr-grid="container">
+      <h1 class="site-title">
+        nodeBot v0.0.1
+      </h1>
+
+      <hr>
+      <div class="button-container" gr-grid="row">
+            <a href="#" class="btn--primary" nodebot-view-status>View status</a>
+            <a href="#" class="btn--primary" nodebot-kill>Kill app</a>
+      </div>
+
+  </div>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+    var socket = io();
+    $("[nodebot-view-status]").click(function(){
+        socket.emit('code', 'get-status');
+        return false;
+    });
+
+    $("[nodebot-kill]").click(function(){
+        socket.emit('code', 'killapp');
+        return false;
+    });
+
+    socket.on('code', function(msg){
+        $('[nodebot-console]').append($('<li>').text(msg));
+        $('.console').scrollTop($('.console')[0].scrollHeight);
+    });
+    </script>
+</body>
+</html>
