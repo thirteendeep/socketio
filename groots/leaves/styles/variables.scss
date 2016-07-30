@@ -39,8 +39,11 @@ $colors: (
         white:                     #fff,
     ),
     brand: (
-        primary:                   $color-globalia,
-        secondary:                 #065ca7
+        primary:                   #588C7E,
+        secondary:                 #F2E394,
+        tertiary:                  #F2AE72,
+        quaternary:                #D96459,
+        quinary:                   #8C4646
     ),
     greys: (
         xdark:                     #191919,
@@ -56,6 +59,10 @@ $colors: (
     )
 );
 
+
+$white: #fff;
+$color-primary: #F2AE72;
+$color-primary: #D96459;
 
 // Globals
 // --------------------------------------------------------------------------

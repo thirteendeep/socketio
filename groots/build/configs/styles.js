@@ -12,7 +12,7 @@ module.exports = function() {
     var settings = {
         maps: true,
         autoprefixer: ['last 2 versions'],
-        lint: true,
+        lint: false,
         lintIgnore: [],
         lintFiles: [
             paths.src.styles + '**/*.scss',
