@@ -56,6 +56,7 @@
     });
 
     socket.on('code', function(code){
+      console.log(code);
         $('[nodebot-console]').append($('<li>')
                               .text(code))
                               .scrollTop($('[nodebot-console]')[0].scrollHeight);

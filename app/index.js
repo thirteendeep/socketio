@@ -46,7 +46,7 @@ io.on('connection', function(socket){
 
       switch(codeId) {
           case 'get-status':
-              io.emit('code', "("+ clientIp +") status ok");
+              io.emit('code', "("+ userIp +") status ok");
               break;
           case 'killapp':
               if (codeId == 1) {
