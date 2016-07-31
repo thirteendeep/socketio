@@ -1,0 +1,46 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>nodeBot - v0.0.1</title>
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/dist/css/groots.css">
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+</head>
+<body>
+<ul class="themeBox">
+    <li title="#F2E394" style="background: #F2E394"></li>
+    <li title="#F2AE72" style="background: #F2AE72"></li>
+    <li title="#D96459" style="background: #D96459"></li>
+    <li title="#8C4646" style="background: #8C4646"></li>
+  </ul>
+  <div gr-grid="container">
+      <h1 class="site-title">
+        nodeBot v0.0.1
+      </h1>
+
+      <hr>
+      <div class="button-container" gr-grid="row">
+          <form action="" nodebot-form>
+            <input type="password" placeholder="Hello my friend" autofocus>
+            <button type="submit" class="btn--primary">send</button>
+          </form>
+      </div>
+
+  </div>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+    var socket = io();
+    $("[nodebot-form]").submit(function(e){
+        var pwd = $(this).find("[type=password]").val();
+        socket.emit('user', pwd);
+        setTimeout(function() {
+          window.location.reload();
+        },300)
+    });
+    </script>
+</body>
+</html>

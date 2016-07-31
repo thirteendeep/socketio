@@ -4,20 +4,27 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var colors = require('colors');
 var path = require('path');
+var user = false;
+var userIp = 0;
 //var five = require("johnny-five");
 
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', function(req, res){
-    res.sendfile('views/index.html');
+  if (!user) {
+      res.sendfile('views/login.html');
+  }
+  else {
+      res.sendfile('views/index.html');
+  }
 });
 
 io.on('connection', function(socket){
     var socketId = socket.id;
-    var clientIp = socket.request.connection.remoteAddress;
+    clientIp = socket.request.connection.remoteAddress;
 
     console.log("New connection: "+ clientIp);
-    io.emit('code', 'New connection: '+ clientIp);
+    io.emit('code', '(nodeBot) new user: '+ clientIp);
 });
 
 http.listen(3000, "0.0.0.0",  function(){
@@ -26,11 +33,21 @@ http.listen(3000, "0.0.0.0",  function(){
 
 
 io.on('connection', function(socket){
+
+    socket.on('user', function(pwd){
+        if (pwd === "soleil43") {
+              user = true;
+        }
+        else if (pwd === "logout") {
+            user = false;
+        }
+    });
+
     socket.on('code', function(codeId){
 
       switch(codeId) {
           case 'get-status':
-              io.emit('code', "Up and running");
+              io.emit('code', "("+ clientIp +") status ok");
               break;
           case 'killapp':
               if (codeId == 1) {

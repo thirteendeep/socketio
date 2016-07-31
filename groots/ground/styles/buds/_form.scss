@@ -428,7 +428,7 @@ $form-element-padding: if(variable-exists(form-element-padding), $form-element-p
 //      <label for=''> ... </label>
 // </div>
 
-@mixin form-checkbox($checkbox-size: $form-element-height/2, $checkbox-color: $color-secondary) {
+@mixin form-checkbox($checkbox-size: $form-element-height/2, $checkbox-color: $color-primary) {
 
     .checkbox-wrapper {
 
@@ -560,5 +560,3 @@ $form-element-padding: if(variable-exists(form-element-padding), $form-element-p
         }
     }
 }
-
-
