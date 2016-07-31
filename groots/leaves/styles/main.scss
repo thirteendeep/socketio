@@ -16,7 +16,17 @@ body {
   font-family: 'Inconsolata', monospace;
   background-color: color(brand, secondary);
   padding-bottom: calc(200px - #{$root-vgrid});
+
+  @media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2)
+  and (orientation: landscape) {
+      display: none;
+  }
 }
+
+
 
 hr {
   width: 100%;
@@ -139,6 +149,12 @@ background: $white;
 font-weight: bold;
 transition: all 350ms ease-in-out;
 border-top-left-radius: 10px;
+opacity: 0;
+
+@include mq(sm) {
+    opacity: 1;
+}
+
   &.is-opened {
     bottom: 160px;
     z-index: 1;
