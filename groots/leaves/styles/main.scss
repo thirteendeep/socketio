@@ -97,8 +97,10 @@ transition: all 350ms ease-in-out ;
     padding-bottom: $grid-gutter-width;
   }
 }
-[gr-grid=container] {
-  animation: animate 850ms forwards;
+
+
+[nodebot-login] [gr-grid=container] {
+  animation: animate 800ms forwards;
   animation-delay: 500ms;
   opacity: 0;
 }
@@ -108,9 +110,10 @@ transition: all 350ms ease-in-out ;
   100% { opacity: 1; }
 }
 
-.themeBox li {
+[nodebot-login] .themeBox li {
   display: block;
   animation: bande 1250ms forwards;
+  animation-delay: 300ms;
 }
 
 @keyframes bande {
