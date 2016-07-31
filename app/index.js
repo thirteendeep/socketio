@@ -4,7 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var colors = require('colors');
 var path = require('path');
-var user = false;
+var user = [];
 var userIp = 0;
 //var five = require("johnny-five");
 
@@ -21,14 +21,13 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     var socketId = socket.id;
-    clientIp = socket.request.connection.remoteAddress;
-
-    console.log("New connection: "+ clientIp);
-    io.emit('code', '(nodeBot) new user: '+ clientIp);
+    userIp = socket.request.connection.remoteAddress;
+    io.emit('code', '(nodeBot) new user: '+ userIp);
 });
 
 http.listen(3000, "0.0.0.0",  function(){
     console.log('listening on *:3000');
+
 });
 
 

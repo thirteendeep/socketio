@@ -97,6 +97,26 @@ transition: all 350ms ease-in-out ;
     padding-bottom: $grid-gutter-width;
   }
 }
+[gr-grid=container] {
+  animation: animate 850ms forwards;
+  animation-delay: 500ms;
+  opacity: 0;
+}
+
+@keyframes animate {
+  0%   {opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.themeBox li {
+  display: block;
+  animation: bande 1250ms forwards;
+}
+
+@keyframes bande {
+  0%   { height: 0; }
+  100% { height: 20px; }
+}
 
 
 [nodebot-toggleConsole] {
