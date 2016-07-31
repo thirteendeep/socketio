@@ -12,12 +12,14 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', function(req, res){
   if (!user) {
-      res.sendfile('views/login.html');
+      res.sendFile(path.join(__dirname, '/../views/login.html'));
   }
   else {
-      res.sendfile('views/index.html');
+      res.sendFile(path.join(__dirname, '/../views/index.html'));
   }
 });
+
+
 
 io.on('connection', function(socket){
     var socketId = socket.id;
